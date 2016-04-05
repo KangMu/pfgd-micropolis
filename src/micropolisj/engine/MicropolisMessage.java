@@ -58,6 +58,7 @@ public enum MicropolisMessage
 	FLOOD_REPORT,
 	MELTDOWN_REPORT,        // 43            doMeltdown
 	RIOTING_REPORT,
+	WATERMAIN_REPORT,
 
 	// added by Jason
 	NO_NUCLEAR_PLANTS;
@@ -86,5 +87,6 @@ public enum MicropolisMessage
 	SHIPWRECK_REPORT.useNotificationPane = true;
 	COPTER_CRASH_REPORT.useNotificationPane = true;
 	PLANECRASH_REPORT.useNotificationPane = true;
+	WATERMAIN_REPORT.useNotificationPane = true;
 	}
 }

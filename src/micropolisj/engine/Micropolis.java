@@ -894,7 +894,7 @@ public class Micropolis
 		if (PRNG.nextInt(DisChance[gameLevel]+1) != 0)
 			return;
 
-		switch (PRNG.nextInt(9))
+		switch (PRNG.nextInt(10))
 		{
 		case 0:
 		case 1:
@@ -917,6 +917,9 @@ public class Micropolis
 			if (pollutionAverage > 60) {
 				makeMonster();
 			}
+			break;
+		case 9:
+			makeWaterMainBreak();
 			break;
 		}
 	}
@@ -1467,6 +1470,7 @@ public class Micropolis
 		bb.put("STADIUM_FULL", new MapScanner(this, MapScanner.B.STADIUM_FULL));
 		bb.put("AIRPORT", new MapScanner(this, MapScanner.B.AIRPORT));
 		bb.put("SEAPORT", new MapScanner(this, MapScanner.B.SEAPORT));
+		bb.put("WATERMAINBREAK", new MapScanner(this, MapScanner.B.WATERMAINBREAK));
 
 		this.tileBehaviors = bb;
 	}
@@ -2388,6 +2392,36 @@ public class Micropolis
 							setTile(xx, yy, FLOOD);
 							floodCnt = 30;
 							sendMessageAt(MicropolisMessage.FLOOD_REPORT, xx, yy);
+							floodX = xx;
+							floodY = yy;
+							return;
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	public void makeWaterMainBreak()
+	{
+		final int [] DX = { 0, 1, 0, -1 };
+		final int [] DY = { -1, 0, 1, 0 };
+
+		for (int z = 0; z < 300; z++) {
+			int x = PRNG.nextInt(getWidth());
+			int y = PRNG.nextInt(getHeight());
+			int tile = getTile(x, y);
+			if (isRoad(tile))
+			{
+				for (int t = 0; t < 4; t++) {
+					int xx = x + DX[t];
+					int yy = y + DY[t];
+					if (testBounds(xx,yy)) {
+						int c = map[yy][xx];
+						if (isFloodable(c)) {
+							setTile(xx, yy, FLOOD);
+							floodCnt = 30;
+							sendMessageAt(MicropolisMessage.WATERMAIN_REPORT, xx, yy);
 							floodX = xx;
 							floodY = yy;
 							return;

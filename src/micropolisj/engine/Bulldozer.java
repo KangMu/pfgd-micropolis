@@ -85,6 +85,7 @@ class Bulldozer extends ToolStroke
 		{
 			// dozing over water, replace with water.
 			eff.setTile(0, 0, RIVER);
+			eff.spend(100);
 		}
 		else
 		{
